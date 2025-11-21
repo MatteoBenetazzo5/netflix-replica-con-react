@@ -1,7 +1,7 @@
 export default function Footer() {
   return (
     <footer className="container-xxl px-3 px-md-4 py-5 text-secondary">
-      {/* ICONE SOCIAL */}
+      {/* ICONE */}
       <div className="d-flex align-items-center gap-3 mb-3">
         <i className="bi bi-facebook fs-4"></i>
         <i className="bi bi-instagram fs-4"></i>

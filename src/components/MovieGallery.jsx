@@ -6,7 +6,7 @@ export default function MovieGallery() {
   const [harry, setHarry] = useState([])
   const [starwars, setStarwars] = useState([])
 
-  // Refs per lo scroll
+  // SCROLL
   const refAvengers = useRef(null)
   const refHarry = useRef(null)
   const refStarwars = useRef(null)
@@ -73,7 +73,7 @@ export default function MovieGallery() {
         </div>
       </div>
 
-      {/* GALLERIA SCORRIBILE */}
+      {/* GALLERIA FILM */}
       <div
         ref={ref}
         className="hide-scrollbar"

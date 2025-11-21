@@ -8,7 +8,7 @@ export default function Navbar() {
 
   const handleSearchIconClick = () => {
     setShowSearch(!showSearch)
-    setQuery("") // reset input quando si chiude
+    setQuery("")
   }
 
   return (
@@ -24,7 +24,7 @@ export default function Navbar() {
             />
           </a>
 
-          {/* HAMBURGER MENU */}
+          {/* MENU PER TELEFONI*/}
           <button
             className="navbar-toggler"
             type="button"

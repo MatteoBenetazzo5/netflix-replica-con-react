@@ -5,7 +5,6 @@ export default function SearchResults({ query }) {
 
 useEffect(() => {
   if (!query || query.length === 0) {
-    // Non fare setState dentro l’effetto → lo facciamo fuori
     return
   }
 
@@ -32,7 +31,7 @@ useEffect(() => {
   fetchMovies()
 }, [query])
 
-// 👇 sposto qui il reset
+    //RESET
 if (!query || query.length === 0) {
   if (results.length > 0) setResults([])  
 }

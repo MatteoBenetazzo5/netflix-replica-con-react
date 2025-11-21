@@ -30,7 +30,7 @@ main {
   background-color: #000;
 }
 
-/* NASCONDI SCROLLBAR ORIZZONTALE GALLERIA */
+/* NASCONDI SCROLLBAR */
 .hide-scrollbar {
   overflow-x: scroll;
   scrollbar-width: none; 
