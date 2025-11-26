@@ -1,17 +1,21 @@
 import { useEffect, useState, useRef } from "react"
+import { useNavigate } from "react-router-dom"
 
 export default function MovieGallery() {
-  
+  // 1) STATE: memorizza i film caricati (3 categorie)
   const [avengers, setAvengers] = useState([])
   const [harry, setHarry] = useState([])
   const [starwars, setStarwars] = useState([])
 
-  // SCROLL
+  // 2) NAVIGATE: per andare alla pagina di dettaglio
+  const navigate = useNavigate()
+
+  // 3) REFS per lo scroll orizzontale
   const refAvengers = useRef(null)
   const refHarry = useRef(null)
   const refStarwars = useRef(null)
 
-  // FUNZIONE FETCH
+  // 4) FETCH GENERICA
   const fetchMovies = async (searchTerm, setter) => {
     try {
       const res = await fetch(
@@ -33,14 +37,14 @@ export default function MovieGallery() {
     }
   }
 
-  // FETCH DI CARICMENTO
+  // 5) CARICAMENTO INIZIALE
   useEffect(() => {
     fetchMovies("Avengers", setAvengers)
     fetchMovies("Harry Potter", setHarry)
     fetchMovies("Star Wars", setStarwars)
   }, [])
 
-  // FUNZIONI PER SCROLLARE 
+  // 6) FUNZIONI SCROLL
   const scrollLeft = (ref) => {
     ref.current.scrollBy({ left: -400, behavior: "smooth" })
   }
@@ -49,7 +53,7 @@ export default function MovieGallery() {
     ref.current.scrollBy({ left: 400, behavior: "smooth" })
   }
 
-  // RENDER DI UNA RIGA
+  // 7) FUNZIONE PER RENDERIZZARE UNA RIGA
   const renderRow = (title, movies, ref) => (
     <section className="mb-4 position-relative">
       {/* TITOLO + FRECCE */}
@@ -90,12 +94,14 @@ export default function MovieGallery() {
             src={movie.Poster}
             alt={movie.Title}
             onError={(e) => (e.target.style.display = "none")}
+            onClick={() => navigate("/movie-details/" + movie.imdbID)}
             style={{
               height: "180px",
               borderRadius: "6px",
               flexShrink: 0,
               objectFit: "cover",
               transition: "transform 0.2s",
+              cursor: "pointer",
             }}
             className="movie-card"
           />
@@ -104,8 +110,10 @@ export default function MovieGallery() {
     </section>
   )
 
+  // 8) RENDER DELLA PAGINA
   return (
     <main className="container-fluid px-3 px-md-4 py-3 text-white">
+      <title>Home</title>
       {renderRow("Avengers", avengers, refAvengers)}
       {renderRow("Harry Potter", harry, refHarry)}
       {renderRow("Star Wars", starwars, refStarwars)}

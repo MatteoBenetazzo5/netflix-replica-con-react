@@ -1,13 +1,14 @@
 import { useEffect, useState } from "react"
+import { useNavigate } from "react-router-dom"
 
 export default function SearchResults({ query }) {
+  // questo componente ha UNA responsabilità:
+  // mostrare i risultati della ricerca del film
+
   const [results, setResults] = useState([])
+  const navigate = useNavigate()
 
-useEffect(() => {
-  if (!query || query.length === 0) {
-    return
-  }
-
+  // funzione dedicata alla fetch (una funzione = una cosa sola)
   const fetchMovies = async () => {
     try {
       const response = await fetch(
@@ -16,10 +17,12 @@ useEffect(() => {
       const data = await response.json()
 
       if (data.Search) {
-        const valid = data.Search.filter(
-          movie => movie.Poster && movie.Poster !== "N/A"
+        const validMovies = data.Search.filter(
+          (movie) => movie.Poster && movie.Poster !== "N/A"
         )
-        setResults(valid.slice(0, 10))
+
+        // massimo 10 risultati
+        setResults(validMovies.slice(0, 10))
       } else {
         setResults([])
       }
@@ -28,13 +31,16 @@ useEffect(() => {
     }
   }
 
-  fetchMovies()
-}, [query])
+  // eseguo la fetch solo quando query cambia
+  useEffect(() => {
+    if (!query) {
+      setResults([])
+      return
+    }
 
-    //RESET
-if (!query || query.length === 0) {
-  if (results.length > 0) setResults([])  
-}
+    fetchMovies()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [query])
 
   return (
     <div className="bg-black px-3 py-3 border-bottom border-secondary">
@@ -48,6 +54,8 @@ if (!query || query.length === 0) {
               alt={movie.Title}
               className="img-fluid rounded-2"
               onError={(e) => (e.target.style.display = "none")}
+              onClick={() => navigate("/movie-details/" + movie.imdbID)}
+              style={{ cursor: "pointer" }}
             />
           </div>
         ))}
